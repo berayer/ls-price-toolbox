@@ -28,6 +28,8 @@ export default defineConfig(
       ...eslintPluginReactRefresh.configs.vite.rules,
       // 允许没有返回类型的函数
       '@typescript-eslint/explicit-function-return-type': 'off',
+      // 允许导出组件和函数
+      'react-refresh/only-export-components': 'off',
     },
   },
   eslintConfigPrettier,

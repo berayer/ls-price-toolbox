@@ -1,0 +1,43 @@
+{
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "asar",
+    "demi",
+    "electronjs",
+    "eslintcache",
+    "Frameless",
+    "iconify",
+    "lucide",
+    "nsis",
+    "oklch",
+    "overfactivelow",
+    "qlementine",
+    "reka",
+    "shadcn",
+    "tanstack",
+    "Unmaximize",
+    "unplugin",
+    "vite",
+    "vueuse"
+  ],
+  "cSpell.ignorePaths": [
+    "package-lock.json",
+    "node_modules",
+    "vscode-extension",
+    ".git/{info,lfs,logs,refs,objects}/**",
+    ".git/{index,*refs,*HEAD}",
+    ".vscode",
+    ".vscode-insiders",
+    "pnpm-lock.yaml"
+  ],
+  "css.customData": [".vscode/tailwind.json"]
+}

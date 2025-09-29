@@ -1,6 +1,7 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { initIpcMain } from './api'
 
 function createWindow(): void {
   // Create the browser window.
@@ -67,8 +68,8 @@ app.whenReady().then(() => {
     optimizer.registerFramelessWindowIpc()
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  // 注册ipc事件
+  initIpcMain()
 
   createWindow()
 

@@ -11,6 +11,14 @@ import {
 } from '@/components/ui/sidebar'
 import { Home, Command, Info } from 'lucide-react'
 import { useAppStore } from '@/stores'
+import { removeSplashScreen } from '@/lib/splashScreen'
+import { fetchSqlite } from '@/lib/fetchSqlite'
+import { Button } from '@/components/ui/button'
+import MinimizeIcon from '~icons/qlementine-icons/windows-minimize-16'
+import MaximizeIcon from '~icons/qlementine-icons/windows-maximize-16'
+import UnmaximizeIcon from '~icons/qlementine-icons/windows-unmaximize-16'
+import CloseIcon from '~icons/qlementine-icons/windows-close-16'
+import { useEffect, useState } from 'react'
 
 const appMenu = [
   {
@@ -24,6 +32,40 @@ const appMenu = [
     to: '/about',
   },
 ]
+
+function WindowControl() {
+  const [isMaximized, setIsMaximized] = useState(false)
+
+  const listener = (_, isMaximize) => {
+    setIsMaximized(isMaximize)
+  }
+
+  useEffect(() => {
+    window.electron.ipcRenderer.on('WIN::MAXIMIZED', listener)
+
+    return () => {
+      window.electron.ipcRenderer.removeListener('WIN::MAXIMIZED', listener)
+    }
+  }, [])
+
+  function windowInvoke(event: 'min' | 'max' | 'close') {
+    window.electron.ipcRenderer.send('win:invoke', event)
+  }
+
+  return (
+    <div className="no-drag flex">
+      <Button variant="ghost" className="rounded-none" onClick={() => windowInvoke('min')}>
+        <MinimizeIcon />
+      </Button>
+      <Button variant="ghost" className="rounded-none" onClick={() => windowInvoke('max')}>
+        {isMaximized ? <UnmaximizeIcon /> : <MaximizeIcon />}
+      </Button>
+      <Button variant="ghost" className="hover:bg-destructive rounded-none" onClick={() => windowInvoke('close')}>
+        <CloseIcon />
+      </Button>
+    </div>
+  )
+}
 
 function AppSidebar() {
   const setAppTitle = useAppStore((state) => state.setTitle)
@@ -67,11 +109,11 @@ const RootLayout = () => {
     <SidebarProvider open={false}>
       <AppSidebar />
       <SidebarInset className="flex flex-1 flex-col contain-size">
-        <header className="bg-accent drag flex h-10 shrink-0 items-center justify-between">
+        <header className="drag flex h-10 shrink-0 items-center justify-between">
           <div className="flex items-center gap-4 px-4">
             <span className="text-sm font-bold">{appTitle}</span>
           </div>
-          <div>right</div>
+          <WindowControl />
         </header>
         <div className="flex-1 overflow-auto">
           <Outlet />
@@ -81,4 +123,18 @@ const RootLayout = () => {
   )
 }
 
-export const Route = createRootRoute({ component: RootLayout })
+export const Route = createRootRoute({
+  component: RootLayout,
+  loader: async () => {
+    // 初始化数据
+    if (!useAppStore.getState().init) {
+      const colors = await fetchSqlite<SQLITE.Color[]>('findAllColor')
+      const mats = await fetchSqlite<SQLITE.Mat[]>('findAllMat')
+      const priceTypes = await fetchSqlite<SQLITE.PriceType[]>('findAllPriceType')
+      useAppStore.setState({ colors, mats, priceTypes, init: true })
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      // 移除首屏加载动画
+      removeSplashScreen()
+    }
+  },
+})

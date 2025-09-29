@@ -1,34 +1,3 @@
 # ls-price-toolbox
 
-An Electron application with React and TypeScript
-
-## Recommended IDE Setup
-
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
-## Project Setup
-
-### Install
-
-```bash
-$ pnpm install
-```
-
-### Development
-
-```bash
-$ pnpm dev
-```
-
-### Build
-
-```bash
-# For windows
-$ pnpm build:win
-
-# For macOS
-$ pnpm build:mac
-
-# For Linux
-$ pnpm build:linux
-```
+- [x] Win11 下窗口的圆角异常显示, 具体描述请看: [Win11 下窗口的圆角异常显示](https://www.reddit.com/r/Windows11/comments/1hfn4sw/rounded_corners_do_not_show_properly_under_some/?tl=zh-hans)

@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarHeader,
 } from '@/components/ui/sidebar'
-import { Home, Command, Info } from 'lucide-react'
+import { ClipboardPlus, Command, Info } from 'lucide-react'
 import { useAppStore } from '@/stores'
 import { removeSplashScreen } from '@/lib/splashScreen'
 import { fetchSqlite } from '@/lib/fetchSqlite'
@@ -22,8 +22,8 @@ import { useEffect, useState } from 'react'
 
 const appMenu = [
   {
-    name: '首页',
-    icon: <Home />,
+    name: '报价录入',
+    icon: <ClipboardPlus />,
     to: '/',
   },
   {
@@ -53,7 +53,7 @@ function WindowControl() {
   }
 
   return (
-    <div className="no-drag flex">
+    <div className="no-drag flex h-full">
       <Button variant="ghost" className="rounded-none" onClick={() => windowInvoke('min')}>
         <MinimizeIcon />
       </Button>
@@ -89,7 +89,7 @@ function AppSidebar() {
         <SidebarGroup>
           {appMenu.map((item) => (
             <SidebarMenuItem key={item.to}>
-              <SidebarMenuButton asChild onClick={() => handleRouterChange(item)}>
+              <SidebarMenuButton asChild onClick={() => handleRouterChange(item)} tooltip={item.name}>
                 <Link to={item.to} className="[&.active]:bg-sidebar-accent [&.active]:text-shadow-sidebar-foreground">
                   {item.icon}
                 </Link>

@@ -18,7 +18,7 @@ export const Route = createFileRoute('/')({
 
 function Index() {
   return (
-    <div className="flex h-full p-2">
+    <div className="flex h-full p-4 pt-2">
       <Tabs defaultValue="1" className="w-full">
         <TabsList>
           <TabsTrigger value="1">板材报价</TabsTrigger>
@@ -131,7 +131,7 @@ function BoardPice() {
         </div>
         <ScrollArea className="flex-1 overflow-auto border contain-size">
           <Table>
-            <TableHeader className="bg-accent sticky top-0">
+            <TableHeader className="bg-muted sticky top-0">
               <TableRow>
                 <TableHead>序号</TableHead>
                 <TableHead>编码</TableHead>

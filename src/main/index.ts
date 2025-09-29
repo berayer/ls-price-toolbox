@@ -6,8 +6,10 @@ import { initIpcMain } from './api'
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1100,
+    minWidth: 900,
+    height: 750,
+    minHeight: 670,
     show: false,
     frame: false,
     autoHideMenuBar: true,
